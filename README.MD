@@ -83,3 +83,37 @@ If you want to learn more about building native executables, please consult http
 >   - For test configuration files.
 > 
 > For more information about BAMOE, please refer to [the official BAMOE Documentation](https://www.ibm.com/docs/en/ibamoe).
+
+### _deploy to openshift_
+Link to instructions to deploy Kogito project on Openshift:
+https://github.com/KIE-Learning/kogito-enablement/blob/master/modules/03_Kogito_DMN/03_1_Kogito_DMN_Lab.adoc
+
+Install the RHPAM kogito operator on openshift
+
+Download the kogito cli and create a new project:
+```shell script
+./kogito new-project airmiles-service 
+```
+Alternatively you can use:
+```shell script
+oc new-project airmiles-service 
+```
+Make sure the jars are compiled:
+```shell script
+mvn clean package
+```
+Create a new Kogito service definition:
+```shell script
+./kogito deploy-service dmn-test
+```
+where dmn-test is the name of the service
+
+Check that the kogito operator has created the required Build Configuration of our project using our oc client:
+```shell script
+oc get bc
+```
+From the root directory of you project run the following to deploy the project:
+```shell script
+oc start-build dmn-test --from-dir=target/
+```
+
